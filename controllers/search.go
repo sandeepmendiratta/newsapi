@@ -3,15 +3,21 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sandeepmendiratta/newsapi/config"
+	"github.com/sandeepmendiratta/newsapi/util"
 	"math"
 	"net/http"
 	"net/url"
 	"strconv"
 )
 
-var apikey  = ""
+var apiKey string
+
+
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	apiKey := config.Configuration.ApiKey
+	apiKey= util.TrimQuote(apiKey)
 	u, err := url.Parse(r.URL.String())
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -38,7 +44,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	search.NextPage = next
 	pageSize := 20
 
-	endpoint := fmt.Sprintf("https://newsapi.org/v2/everything?q=%s&pageSize=%d&page=%d&apiKey=%s&sortBy=publishedAt&language=en", url.QueryEscape(search.SearchKey), pageSize, search.NextPage, apikey)
+	endpoint := fmt.Sprintf("https://newsapi.org/v2/everything?q=%s&pageSize=%d&page=%d&apiKey=%s&sortBy=publishedAt&language=en", url.QueryEscape(search.SearchKey), pageSize, search.NextPage,apiKey)
 	resp, err := http.Get(endpoint)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

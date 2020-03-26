@@ -1,4 +1,0 @@
-{
-  "url": "https://newsapi.org/v2/everything?q=%s&pageSize=%d&page=%d&apiKey=%s&sortBy=publishedAt&language=en/",
-  "query": "url.QueryEscape(search.SearchKey), pageSize, search.NextPage, *apiKey)"
-}
