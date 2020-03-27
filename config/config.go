@@ -48,9 +48,6 @@ func generateDefaultConfig(c *Config) {
 	c.AppName = "newsapi"
 	c.LogLevel = ""
 	c.Port = "8081"
-
-
-
 }
 
 //load config from file

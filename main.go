@@ -15,7 +15,6 @@ func main() {
 	config.LoadConfig()
 	logConfig.InitializeLogging()
 	fmt.Println("Newsapi Version:", config.Configuration.Version)
-	//fmt.Println("Newsapi apiKey:", config.Configuration.ApiKey)
 	fmt.Println("Newsapi Build Version:", config.Configuration.Build)
 	fmt.Println("Welcome to the newsapi app...")
 	fmt.Println("Starting application... localhost:", config.Configuration.Port )

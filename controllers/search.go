@@ -3,8 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sandeepmendiratta/newsapi/config"
-	"github.com/sandeepmendiratta/newsapi/util"
 	"math"
 	"net/http"
 	"net/url"
@@ -16,8 +14,7 @@ var apiKey string
 
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := config.Configuration.ApiKey
-	apiKey= util.TrimQuote(apiKey)
+	fmt.Println("orig key", apiKey)
 	u, err := url.Parse(r.URL.String())
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
