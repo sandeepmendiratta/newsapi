@@ -12,9 +12,9 @@ import (
 var apiKey string
 
 
-
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("orig key", apiKey)
+	apiKey := config.Configuration.ApiKey
+	apiKey= util.TrimQuote(apiKey)
 	u, err := url.Parse(r.URL.String())
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
