@@ -78,8 +78,7 @@ func generateEnvConfig(c *Config) {
 
 //load config from flag if required
 func generateFlagConfig(c *Config) {
-	flag.StringVar(&c.AppName, "appName", c.AppName, "Set the AppName")
-	//flag.StringVar(&c.ApiKey, "apiKey", c.ApiKey, "Set the ApiKey")
+	flag.StringVar(&c.AppName, "appName", c.AppName, "Set the Appname")
 	flag.Parse()
 }
 

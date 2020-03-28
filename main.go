@@ -16,7 +16,7 @@ func main() {
 	logConfig.InitializeLogging()
 	fmt.Println("Newsapi Version:", config.Configuration.Version)
 	fmt.Println("Newsapi Build Version:", config.Configuration.Build)
-	fmt.Println("Welcome to the newsapi app...")
+	fmt.Println("Welcome to the app:", config.Configuration.AppName)
 	fmt.Println("Starting application... localhost:", config.Configuration.Port )
 	app.StartApp()
 
