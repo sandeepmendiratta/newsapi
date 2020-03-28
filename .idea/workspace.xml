@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80eabc72-0e78-4088-8c0c-eb311658831b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/health.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/health.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/search.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/search.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +20,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.1/libexec" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.5/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -118,9 +116,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="185" key="#GOROOT" timestamp="1585255716014">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state x="335" y="131" key="#GOROOT" timestamp="1585371177704">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state x="335" y="131" key="#GOROOT/0.0.1280.800@0.0.1280.800" timestamp="1585371177704" />
     <state x="440" y="185" key="#GOROOT/0.23.1680.972@0.23.1680.972" timestamp="1585255716014" />
     <state x="240" y="19" key="#Go_Modules_(vgo)" timestamp="1584908510181">
       <screen x="0" y="0" width="1280" height="800" />
@@ -144,28 +143,28 @@
       <screen x="0" y="23" width="1680" height="972" />
     </state>
     <state x="609" y="213" key="#go_test_github.com/sandeepmendiratta/newsapi/controllers/0.23.1680.972@0.23.1680.972" timestamp="1585277890527" />
-    <state width="1638" height="383" key="GridCell.Tab.0.bottom" timestamp="1585315691353">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state width="1238" height="174" key="GridCell.Tab.0.bottom" timestamp="1585371239747">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1238" height="174" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1585022474540" />
+    <state width="1238" height="174" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1585371239747" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1585260373068" />
     <state width="1638" height="383" key="GridCell.Tab.0.bottom/0.23.1680.972@0.23.1680.972" timestamp="1585315691353" />
-    <state width="1638" height="383" key="GridCell.Tab.0.center" timestamp="1585315691352">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state width="1238" height="174" key="GridCell.Tab.0.center" timestamp="1585371239746">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1238" height="174" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1585022474538" />
+    <state width="1238" height="174" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1585371239746" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1585260373066" />
     <state width="1638" height="383" key="GridCell.Tab.0.center/0.23.1680.972@0.23.1680.972" timestamp="1585315691352" />
-    <state width="1638" height="383" key="GridCell.Tab.0.left" timestamp="1585315691352">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state width="1238" height="174" key="GridCell.Tab.0.left" timestamp="1585371239745">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1238" height="174" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1585022474537" />
+    <state width="1238" height="174" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1585371239745" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1585260373066" />
     <state width="1638" height="383" key="GridCell.Tab.0.left/0.23.1680.972@0.23.1680.972" timestamp="1585315691352" />
-    <state width="1638" height="383" key="GridCell.Tab.0.right" timestamp="1585315691353">
-      <screen x="0" y="23" width="1680" height="972" />
+    <state width="1238" height="174" key="GridCell.Tab.0.right" timestamp="1585371239747">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1238" height="174" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1585022474538" />
+    <state width="1238" height="174" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1585371239747" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1585260373067" />
     <state width="1638" height="383" key="GridCell.Tab.0.right/0.23.1680.972@0.23.1680.972" timestamp="1585315691353" />
   </component>

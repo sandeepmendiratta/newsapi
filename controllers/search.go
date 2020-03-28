@@ -3,6 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sandeepmendiratta/newsapi/config"
+	"github.com/sandeepmendiratta/newsapi/util"
 	"math"
 	"net/http"
 	"net/url"
