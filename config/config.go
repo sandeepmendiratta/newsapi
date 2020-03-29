@@ -64,16 +64,16 @@ func generateFileConfig(c *Config) {
 	err := viper.Unmarshal(c)
 	if err != nil {
 		log.Info("could not unmarshall %v:", err)
-
 	}
 }
 
 //load config from env
 func generateEnvConfig(c *Config) {
-	if value, exists := os.LookupEnv("ApiKey"); exists {
-		c.ApiKey = value
-	}
+	c.ApiKey = os.Getenv("ApiKey")
+	//if value, exists := os.LookupEnv("ApiKey"); exists {
+	//	c.ApiKey = value
 
+	//}
 }
 
 //load config from flag if required

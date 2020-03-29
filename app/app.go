@@ -16,7 +16,7 @@ const (
 
 func StartApp() {
 	port := config.Configuration.Port
-		if port == "" {
+	if port == "" {
 		port = "8080"
 	}
 	r := mux.NewRouter()
