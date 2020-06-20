@@ -22,6 +22,7 @@ func StartApp() {
 	r := mux.NewRouter()
 	r.HandleFunc("/health", controllers.GetHealth).Methods("GET")
 	r.HandleFunc("/", controllers.IndexHandler).Methods("GET")
+	r.HandleFunc("/api1", controllers.GetApi1).Methods("GET")
 	r.HandleFunc("/search", controllers.SearchHandler).Methods("GET")
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 	r.Use(muxlogrus.NewLogger().Middleware)
