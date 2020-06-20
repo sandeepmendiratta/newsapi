@@ -3,9 +3,10 @@ package config
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"os"
 )
 
 type Config struct {
@@ -16,6 +17,7 @@ type Config struct {
 	AppName      string `json:"appName"`
 	VersionCheck bool   `json:"versionCheck"`
 	Port         string `json:"port"`
+	Token        string `json:"token"`
 }
 
 var Configuration *Config
@@ -55,7 +57,7 @@ func generateFileConfig(c *Config) {
 	viper.SetConfigFile("./config.json")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("Error reading config file, %s\n", err)
+		fmt.Printf("Error reading config file, %s\n", err)
 		log.Panicln("could not read the file")
 	}
 	// Confirm which config file is used

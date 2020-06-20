@@ -2,14 +2,14 @@ package app
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
-	muxlogrus "github.com/pytimer/mux-logrus"
-	"github.com/sandeepmendiratta/newsapi/config"
-	"github.com/sandeepmendiratta/newsapi/controllers"
 	"log"
 	"net/http"
 	"strings"
 
+	"github.com/gorilla/mux"
+	muxlogrus "github.com/pytimer/mux-logrus"
+	"github.com/sandeepmendiratta/newsapi/config"
+	"github.com/sandeepmendiratta/newsapi/controllers"
 	//"os"
 )
 
@@ -19,36 +19,35 @@ const (
 
 func StartApp() {
 	port := config.Configuration.Port
-		if port == "" {
+	if port == "" {
 		port = "8080"
 	}
 	r := mux.NewRouter()
 	r.HandleFunc("/health", controllers.GetHealth).Methods("GET")
 	r.HandleFunc("/", controllers.IndexHandler).Methods("GET")
-	r.HandleFunc("/api1", controllers.GetApi1).Methods("GET")
+	// r.HandleFunc("/api1", controllers.GetApi1).Methods("GET")
 	r.HandleFunc("/search", controllers.SearchHandler).Methods("GET")
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
+	r.Handle("/api1", CheckAuthenticated(controllers.GetApi1)).Methods("GET")
 	r.Use(muxlogrus.NewLogger().Middleware)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 
 }
 
-
 func CheckAuthenticated(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		if config.Configuration.DisableAuth {
-			next(w, req)
-			return
-		}
+		// if config.Configuration.DisableAuth {
+		// 	next(w, req)
+		// 	return
+		// }
 
 		authorizationHeader := req.Header.Get("authorization")
 		err := validateHeaderToken(authorizationHeader, config.Configuration.Token)
 		if err == nil {
-			metrics.AuthOk(req)
 			next(w, req)
 		} else {
-			log.Debug("error validating token: %v", err)
-			metrics.AuthFailure(req, metrics.TOKEN_INVALID)
+			log.Println("error validating token: %v", err)
+
 			w.WriteHeader(http.StatusUnauthorized)
 		}
 	})
