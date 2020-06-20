@@ -1,12 +1,15 @@
 package app
 
 import (
+	"fmt"
 	"github.com/gorilla/mux"
 	muxlogrus "github.com/pytimer/mux-logrus"
 	"github.com/sandeepmendiratta/newsapi/config"
 	"github.com/sandeepmendiratta/newsapi/controllers"
 	"log"
 	"net/http"
+	"strings"
+
 	//"os"
 )
 
@@ -27,5 +30,44 @@ func StartApp() {
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 	r.Use(muxlogrus.NewLogger().Middleware)
 	log.Fatal(http.ListenAndServe(":"+port, r))
+
+}
+
+
+func CheckAuthenticated(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		if config.Configuration.DisableAuth {
+			next(w, req)
+			return
+		}
+
+		authorizationHeader := req.Header.Get("authorization")
+		err := validateHeaderToken(authorizationHeader, config.Configuration.Token)
+		if err == nil {
+			metrics.AuthOk(req)
+			next(w, req)
+		} else {
+			log.Debug("error validating token: %v", err)
+			metrics.AuthFailure(req, metrics.TOKEN_INVALID)
+			w.WriteHeader(http.StatusUnauthorized)
+		}
+	})
+}
+
+func validateHeaderToken(authorizationHeader string, token string) error {
+	if authorizationHeader != "" {
+		bearerToken := strings.Split(authorizationHeader, " ")
+		if len(bearerToken) == 2 && bearerToken[0] == "Bearer" {
+			if bearerToken[1] == token {
+				return nil
+			} else {
+				return fmt.Errorf("bearer not specified or token does not match")
+			}
+		}
+		return fmt.Errorf("invalid header parts length or missing Bearer token type")
+	} else {
+		return fmt.Errorf("authorization header is blank")
+
+	}
 
 }
