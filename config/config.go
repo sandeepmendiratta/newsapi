@@ -18,6 +18,7 @@ type Config struct {
 	VersionCheck bool   `json:"versionCheck"`
 	Port         string `json:"port"`
 	Token        string `json:"token"`
+	DisableAuth  bool   `json:"disableAuth"`
 }
 
 var Configuration *Config

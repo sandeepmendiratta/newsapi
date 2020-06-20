@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("Newsapi Version:", config.Configuration.Version)
 	fmt.Println("Newsapi Build Version:", config.Configuration.Build)
 	fmt.Println("Welcome to the newsapi app...")
-	fmt.Println("Starting application... localhost:", config.Configuration.Port )
+	fmt.Println("Starting application... localhost:", config.Configuration.Port)
 	app.StartApp()
 
 }
