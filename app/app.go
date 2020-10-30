@@ -19,6 +19,11 @@ const (
 )
 
 func StartApp() {
+
+	lmt := tollbooth.NewLimiter(1, nil) //tollbooth limit
+
+	// Set a custom message.
+	lmt.SetMessage("Oops You have reached maximum request limit.")
 	port := config.Configuration.Port
 	if port == "" {
 		port = "8080"
@@ -30,7 +35,7 @@ func StartApp() {
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR,
 		http.FileServer(http.Dir("."+STATIC_DIR))))
 	r.Handle("/api1", CheckAuthenticated(controllers.GetApi1)).Methods("GET")
-	r.Handle("/api2", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(1, nil), controllers.GetApi2)).Methods("GET")
+	r.Handle("/api2", tollbooth.LimitFuncHandler(lmt, controllers.GetApi2)).Methods("GET")
 	r.Use(muxlogrus.NewLogger().Middleware)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 
