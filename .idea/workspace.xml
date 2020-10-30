@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80eabc72-0e78-4088-8c0c-eb311658831b" name="Default Changelist" comment="" />
+    <list default="true" id="80eabc72-0e78-4088-8c0c-eb311658831b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,7 +19,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.1/libexec" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.13.5/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -105,16 +108,16 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="172" key="#GOROOT" timestamp="1592623574517">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="335" y="131" key="#GOROOT" timestamp="1592625440020">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="335" y="131" key="#GOROOT/0.0.1280.800@0.0.1280.800" timestamp="1585371177704" />
+    <state x="335" y="131" key="#GOROOT/0.0.1280.800@0.0.1280.800" timestamp="1592625440020" />
     <state x="440" y="172" key="#GOROOT/0.0.1680.1050@0.0.1680.1050" timestamp="1592623574517" />
     <state x="440" y="185" key="#GOROOT/0.23.1680.972@0.23.1680.972" timestamp="1585255716014" />
     <state x="240" y="19" key="#Go_Modules_(vgo)" timestamp="1584908510181">

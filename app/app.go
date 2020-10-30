@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/didip/tollbooth"
 	"github.com/gorilla/mux"
 	muxlogrus "github.com/pytimer/mux-logrus"
 	"github.com/sandeepmendiratta/newsapi/config"
@@ -27,8 +28,9 @@ func StartApp() {
 	r.HandleFunc("/", controllers.IndexHandler).Methods("GET")
 	r.HandleFunc("/search", controllers.SearchHandler).Methods("GET")
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR,
-    http.FileServer(http.Dir("."+STATIC_DIR))))
+		http.FileServer(http.Dir("."+STATIC_DIR))))
 	r.Handle("/api1", CheckAuthenticated(controllers.GetApi1)).Methods("GET")
+	r.Handle("/api2", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(1, nil), controllers.GetApi2)).Methods("GET")
 	r.Use(muxlogrus.NewLogger().Middleware)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 
