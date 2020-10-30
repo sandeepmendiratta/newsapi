@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	muxlogrus "github.com/pytimer/mux-logrus"
 	"github.com/sandeepmendiratta/newsapi/config"
-	"github.com/sandeepmendiratta/newsapi/controllers"
+	"github.com/sandeepmendiratta/newsapi/controller"
 	//"os"
 )
 
@@ -29,13 +29,13 @@ func StartApp() {
 		port = "8080"
 	}
 	r := mux.NewRouter()
-	r.HandleFunc("/health", controllers.GetHealth).Methods("GET")
-	r.HandleFunc("/", controllers.IndexHandler).Methods("GET")
-	r.HandleFunc("/search", controllers.SearchHandler).Methods("GET")
+	r.HandleFunc("/health", controller.GetHealth).Methods("GET")
+	r.HandleFunc("/", controller.IndexHandler).Methods("GET")
+	r.HandleFunc("/search", controller.SearchHandler).Methods("GET")
+	r.Handle("/api1", CheckAuthenticated(controller.GetApi1)).Methods("GET")
+	r.Handle("/api2", tollbooth.LimitFuncHandler(lmt, controller.GetApi2)).Methods("GET")
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR,
 		http.FileServer(http.Dir("."+STATIC_DIR))))
-	r.Handle("/api1", CheckAuthenticated(controllers.GetApi1)).Methods("GET")
-	r.Handle("/api2", tollbooth.LimitFuncHandler(lmt, controllers.GetApi2)).Methods("GET")
 	r.Use(muxlogrus.NewLogger().Middleware)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 
