@@ -11,6 +11,7 @@ import (
 	muxlogrus "github.com/pytimer/mux-logrus"
 	"github.com/sandeepmendiratta/newsapi/config"
 	"github.com/sandeepmendiratta/newsapi/controller"
+	"github.com/sandeepmendiratta/newsapi/middlewares/basicauthmiddleware"
 	//"os"
 )
 
@@ -34,6 +35,8 @@ func StartApp() {
 	r.HandleFunc("/search", controller.SearchHandler).Methods("GET")
 	r.Handle("/api1", CheckAuthenticated(controller.GetApi1)).Methods("GET")
 	r.Handle("/api2", tollbooth.LimitFuncHandler(lmt, controller.GetApi2)).Methods("GET")
+	// router.Handle("/api/demo/demo1", basicauthmiddleware.BasicAuthMiddleware(http.HandlerFunc(demoapi.Demo1API))).Methods("GET")
+	r.Handle("/api3", basicauthmiddleware.BasicAuthMiddleware(controller.GetApi3)).Methods("GET")
 	r.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR,
 		http.FileServer(http.Dir("."+STATIC_DIR))))
 	r.Use(muxlogrus.NewLogger().Middleware)
