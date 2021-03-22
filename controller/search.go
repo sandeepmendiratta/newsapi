@@ -3,18 +3,19 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sandeepmendiratta/newsapi/config"
-	"github.com/sandeepmendiratta/newsapi/util"
 	"math"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/sandeepmendiratta/newsapi/util"
+	"github.com/spf13/viper"
 )
 
 var apiKey string
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := config.Configuration.ApiKey
+	apiKey := viper.GetString(apiKey)
 	apiKey = util.TrimQuote(apiKey)
 	u, err := url.Parse(r.URL.String())
 	if err != nil {

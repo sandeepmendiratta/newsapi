@@ -9,10 +9,11 @@ import (
 	"github.com/didip/tollbooth"
 	"github.com/gorilla/mux"
 	muxlogrus "github.com/pytimer/mux-logrus"
-	"github.com/sandeepmendiratta/newsapi/config"
 	"github.com/sandeepmendiratta/newsapi/controller"
 	"github.com/sandeepmendiratta/newsapi/middlewares/basicauthmiddleware"
+
 	//"os"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -25,7 +26,7 @@ func StartApp() {
 
 	// Set a custom message.
 	lmt.SetMessage("Oops You have reached maximum request limit.")
-	port := config.Configuration.Port
+	port := viper.GetString("port")
 	if port == "" {
 		port = "8080"
 	}
@@ -46,13 +47,13 @@ func StartApp() {
 
 func CheckAuthenticated(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		if config.Configuration.DisableAuth {
+		if viper.GetBool("disableauth") {
 			next(w, req)
 			return
 		}
 
 		authorizationHeader := req.Header.Get("authorization")
-		err := validateHeaderToken(authorizationHeader, config.Configuration.Token)
+		err := validateHeaderToken(authorizationHeader, viper.GetString("token"))
 		if err == nil {
 			next(w, req)
 		} else {

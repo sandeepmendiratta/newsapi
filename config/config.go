@@ -1,97 +1,151 @@
 package config
 
 import (
-	"flag"
-	"fmt"
 	"os"
 
 	log "github.com/sirupsen/logrus"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
-type Config struct {
-	Build        string `json:"build"`
-	Version      string `json:"version"`
-	ApiKey       string `json: apiKey`
-	LogLevel     string `json:"logLevel"`
-	AppName      string `json:"appName"`
-	VersionCheck bool   `json:"versionCheck"`
-	Port         string `json:"port"`
-	Token        string `json:"token"`
-	DisableAuth  bool   `json:"disableAuth"`
-}
+// type Config struct {
+// 	Build        string `json:"build"`
+// 	Version      string `json:"version"`
+// 	ApiKey       string `json: apiKey`
+// 	LogLevel     string `json:"logLevel"`
+// 	AppName      string `json:"appName"`
+// 	VersionCheck bool   `json:"versionCheck"`
+// 	Port         string `json:"port"`
+// 	Token        string `json:"token"`
+// 	DisableAuth  bool   `json:"disableAuth"`
+// }
 
-var Configuration *Config
-var configLoaded = false
+// var Configuration *Config
+// var configLoaded = false
+
+// func LoadConfig() {
+// 	Configuration = GenerateConfig()
+// 	configLoaded = true
+// }
 
 func LoadConfig() {
-	Configuration = GenerateConfig()
-	configLoaded = true
+	LoadDefaultConfig()
+	LoadEnvironmentConfig()
+	LoadFileConfig()
+	LoadFlagConfig()
+	CheckRequiredConfig()
 }
 
-func GenerateConfig() *Config {
-	c := &Config{}
-	generateDefaultConfig(c)
-	generateFileConfig(c)
-	generateEnvConfig(c)
-	generateFlagConfig(c)
-	// set logLevel to overide
-	enforceConfig(c)
+func LoadDefaultConfig() {
+	viper.SetDefault(LOGLEVEL, "info")
+	viper.SetDefault("port", ":8081")
+	viper.SetDefault("build", "test")
+	viper.SetDefault("appname", "newsapi")
+	viper.SetDefault("version", "1")
+	viper.SetDefault("disableauth", true)
+	viper.SetDefault("token", "")
 
-	// log.Debug("Starting config: %+v", c)
-
-	return c
 }
+
+func LoadEnvironmentConfig() {
+	viper.AutomaticEnv()
+}
+
+func LoadFileConfig() {
+	if _, err := os.Stat("./config.json"); os.IsNotExist(err) {
+		viper.SetConfigName("config")
+		viper.AddConfigPath(".")
+	} else {
+		viper.SetConfigName("config.json")
+	}
+	viper.SetConfigType("json")
+	viper.AddConfigPath(".")
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Warnf("Unable to read in config file. %v\n", err)
+	}
+}
+
+func LoadFlagConfig() {
+	pflag.String(APIKEY, "", "ApiKey from flag.")
+
+	pflag.Parse()
+	viper.BindPFlags(pflag.CommandLine)
+}
+
+func CheckRequiredConfig() {
+	required := []string{APIKEY}
+	for _, v := range required {
+		if viper.GetString(v) == "" {
+			log.Fatalf("Required config '%v' is not defined.\n", v)
+		}
+	}
+}
+
+// func GenerateConfig() *Config {
+// 	c := &Config{}
+// 	generateDefaultConfig(c)
+// 	generateFileConfig(c)
+// 	generateEnvConfig(c)
+// 	generateFlagConfig(c)
+// 	// set logLevel to overide
+// 	enforceConfig(c)
+
+// 	// log.Debug("Starting config: %+v", c)
+
+// 	return c
+// }
 
 //load default configuration
-func generateDefaultConfig(c *Config) {
-	c.Build = "test"
-	c.Version = "1"
-	c.LogLevel = ""
-	c.AppName = "newsapi"
-	c.LogLevel = ""
-	c.Port = "8081"
-}
+// func generateDefaultConfig(c *Config) {
+// 	c.Build = "test"
+// 	c.Version = "1"
+// 	c.LogLevel = ""
+// 	c.AppName = "newsapi"
+// 	c.LogLevel = ""
+// 	c.Port = "8081"
+// }
 
 //load config from file
-func generateFileConfig(c *Config) {
-	viper.SetConfigFile("./config.json")
-	viper.AutomaticEnv()
-	if err := viper.ReadInConfig(); err != nil {
-		fmt.Printf("Error reading config file, %s\n", err)
-		log.Panicln("could not read the file")
-	}
-	// Confirm which config file is used
-	//fmt.Println("Using config file:", viper.ConfigFileUsed())
+// func generateFileConfig() {
+// 	viper.SetConfigFile("./config.json")
+// 	viper.AutomaticEnv()
+// 	if err := viper.ReadInConfig(); err != nil {
+// 		fmt.Printf("Error reading config file, %s\n", err)
+// 		log.Panicln("could not read the file")
+// 	}
+// 	// Confirm which config file is used
+// 	//fmt.Println("Using config file:", viper.ConfigFileUsed())
 
-	err := viper.Unmarshal(c)
-	if err != nil {
-		log.Info("could not unmarshall %v:", err)
+// 	err := viper.Unmarshal(c)
+// 	if err != nil {
+// 		log.Info("could not unmarshall %v:", err)
 
-	}
-}
+// 	}
+// }
 
 //load config from env
-func generateEnvConfig(c *Config) {
-	if value, exists := os.LookupEnv("ApiKey"); exists {
-		c.ApiKey = value
-	}
+// func generateEnvConfig() {
+// 	if value, exists := os.LookupEnv("ApiKey"); exists {
+// 		ApiKey = value
+// 	}
 
-}
+// }
 
 //load config from flag if required
-func generateFlagConfig(c *Config) {
-	flag.StringVar(&c.AppName, "appName", c.AppName, "Set the AppName")
-	//flag.StringVar(&c.ApiKey, "apiKey", c.ApiKey, "Set the ApiKey")
-	flag.Parse()
-}
+// func generateFlagConfig(c *Config) {
+// 	flag.StringVar(&c.AppName, "appName", c.AppName, "Set the AppName")
+// 	//flag.StringVar(&c.ApiKey, "apiKey", c.ApiKey, "Set the ApiKey")
+// 	flag.Parse()
+// }
 
-//enforce Config function is to have config variable set otherwise panics
-func enforceConfig(c *Config) {
-	if c.VersionCheck {
-		return
-	}
-	//if c.ApiKey == "" {
-	//	log.Panic("APiKey is required to run this - %s", c.ApiKey)
-	//}
-}
+// //enforce Config function is to have config variable set otherwise panics
+// func enforceConfig(c *Config) {
+// 	if c.VersionCheck {
+// 		return
+// 	}
+// 	//if c.ApiKey == "" {
+// 	//	log.Panic("APiKey is required to run this - %s", c.ApiKey)
+// 	//}
+// }
