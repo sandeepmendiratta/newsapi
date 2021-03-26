@@ -15,7 +15,7 @@ import (
 var apiKey string
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	apiKey := viper.GetString(apiKey)
+	apiKey := viper.GetString("apikey")
 	apiKey = util.TrimQuote(apiKey)
 	u, err := url.Parse(r.URL.String())
 	if err != nil {

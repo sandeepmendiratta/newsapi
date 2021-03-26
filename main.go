@@ -19,7 +19,6 @@ func main() {
 	fmt.Println("Newsapi Version:", viper.GetString("version"))
 	fmt.Println("Newsapi Build Version:", viper.GetString("build"))
 	fmt.Println("Welcome to the newsapi app...")
-	fmt.Println("Starting application... localhost:", viper.GetString("port"))
 	app.StartApp()
 
 }
